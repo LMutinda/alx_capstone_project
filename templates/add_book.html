@@ -1,0 +1,88 @@
+<!-- templates/add_book.html -->
+
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+      <title>Add Book</title>
+   </head>
+   <body>
+      <div class="login">
+         <img src="{{ url_for('static', filename='image/login-bg.png') }}" alt="Login image" class="login__img">
+         
+
+         <form action="{{ url_for('add_book') }}" method="post" class="login__form">
+            <h1 class="login__title">Add Book</h1>
+           
+            <div class="login__content">
+               <div class="login__box">
+                 
+
+                  <div class="login__box-input">
+                     <input type="text" id="title" name="title" required class="login__input"  placeholder=" ">
+                     <label for="title" class="add__label">Title</label>
+                  </div>
+               </div>
+
+               <div class="login__box">
+                  
+
+                  <div class="login__box-input">
+                     <input type="text" name="author" required class="login__input" id="author" placeholder=" ">
+                     <label for="author" class="add__label">Author</label>
+                     
+                  </div>
+               </div>
+
+               <div class="login__box">
+                  
+
+                <div class="login__box-input">
+                   <input type="text" name="genre" required class="login__input" id="genre" placeholder=" ">
+                   <label for="genre" class="add__label">Genre</label>
+                   
+                </div>
+             </div>
+
+
+             <div class="login__box">
+                  
+
+                <div class="login__box-input">
+                   <input type="text" name="cover_image" class="login__input" id="cover_image" placeholder=" ">
+                   <label for="cover_image" class="add__label">Cover Image URL</label>
+                   
+                </div>
+             </div>
+
+             <div class="login__box">
+                  
+
+                <div class="login__box-input">
+                   <input type="text" name="reading_status" class="login__input" id="reading_status" placeholder=" ">
+                   <label for="reading_status" class="add__label">Reading Status(TBR,Reading,Read)</label>
+                   
+                   
+                </div>
+             </div>
+            </div>
+
+           
+
+            <button type="submit" class="login__button">Add book</button>
+
+           
+         </form>
+      </div>
+      
+      
+   </body>
+</html>

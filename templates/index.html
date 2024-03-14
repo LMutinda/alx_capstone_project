@@ -1,0 +1,182 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Library</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    
+    <section>
+
+        <nav>
+
+            <div class="logo">
+                
+                <img src="{{ url_for('static', filename='image/logo.png') }}" alt="logo">
+            </div>
+
+            <ul>
+               
+                
+               
+                <li>
+                    <div class="login">
+                        <a href="{{ url_for('login') }}">Login</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="signup">
+                        <a href="{{ url_for('signup') }}">Register</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="logout">
+                        <a href="{{ url_for('logout') }}">Logout</a>
+                    </div>
+                </li>
+                
+            </ul>
+
+          
+            <div class="search">
+                <form action="{{ url_for('search') }}" method="post">
+                    <input class="booksearch" type="text" name="query" placeholder="Search...">
+                    <button type="submit">
+                        <div class="social_icon">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+        </nav>
+
+        <div class="main">
+
+            <div class="main_tag">
+                <h1>WELCOME TO<br><span>YOUR PERSONAL LIBRARY</span></h1>
+                <p>
+                    Your favorite collections from top authors, all in one virtual bookshelf.
+                </p><a href="{{ url_for('add_book') }}" class="main_btn">Add to Library</a>
+
+            </div>
+
+            <div class="main_img">
+                <img src="{{ url_for('static', filename='image/table.png') }}" alt="Tablebooks">
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+
+
+
+
+   
+
+
+
+
+    <!--Books-->
+
+    <div class="featured_boks">
+
+        <h1>My reading list</h1>
+
+        <div class="featured_book_box">
+
+            
+            {% for book in books %}
+            <div class="featured_book_card">
+                <div class="featurde_book_img">
+                    <img src="{{ book.cover_image }}" alt="Book Cover">
+                </div>
+                <div class="featurde_book_tag">
+                    <h2>{{ book.title }}</h2>
+                    <p>Author: {{ book.author }}</p>
+                    <p>Genre: {{ book.genre }}</p> <br>
+                    <a href="{{ url_for('book_details', id=book.id) }}" class="f_btn">View Details</a>
+                    
+                </div>    
+    
+                    
+            </div>
+            {% endfor %}
+
+               
+                         
+
+            
+
+
+
+
+    <!--Footer-->
+
+    <footer>
+        <div class="footer_main">
+
+            <div class="tag">
+                
+                <img src="{{ url_for('static', filename='image/logo.png') }}" alt="logo">
+              
+
+            </div>
+
+            <div class="tag">
+                <h1>Quick Link</h1>
+                
+                <a href="#">Login</a>
+                <a href="#">Register</a>
+                
+            </div>
+
+            <div class="tag">
+                <h1>Contact Info</h1>
+                
+                <a href="#"><i class="fa-solid fa-phone"></i>+254765432123</a>
+                <a href="#"><i class="fa-solid fa-envelope"></i>privatelib123@gmail.com</a>
+                
+            </div>
+
+            <div class="tag">
+                <h1>Follow Us</h1>
+                <div class="social_link">
+                    <i class="fa-brands fa-facebook-f"></i>
+                    <i class="fa-brands fa-instagram"></i>
+                    <i class="fa-brands fa-twitter"></i>
+                    <i class="fa-brands fa-linkedin-in"></i>
+                </div>
+                
+            </div>
+
+            <div class="tag">
+                <h1>Newsletter</h1>
+                <div class="search_bar">
+                    <input type="text" placeholder="Enter email">
+                    <button type="submit">Subscribe</button>
+                </div>                
+            </div>            
+            
+        </div>
+
+        
+
+    </footer>
+
+
+
+
+
+    
+</body>
+</html>
