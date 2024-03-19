@@ -1,0 +1,66 @@
+<!-- templates/add_book.html -->
+
+<!DOCTYPE html>
+   <html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+      <!--=============== REMIXICONS ===============-->
+      <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+      <!--=============== CSS ===============-->
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+      <title>Rate Book</title>
+   </head>
+   <body>
+      <div class="login">
+         <img src="{{ url_for('static', filename='image/login-bg.png') }}" alt="Login image" class="login__img">
+         
+
+         <form action="{{ url_for('rate_book', id=book.id) }}" method="post" class="login__form">
+            <h1 class="login__title">Rate Book</h1>
+           
+            <div class="login__content">
+               <div class="login__box">
+                 
+
+                  <div class="login__box-input">
+                     <input type="number" id="rating" name="rating" required class="login__input" min="1" max="5" placeholder=" ">
+                     <label for="rating" class="add__label">Rating</label>
+                  </div>
+               </div>
+
+               <div class="login__box">
+                  
+
+                  <div class="login__box-input">
+                     <input type="text" name="review" required class="login__input" id="review" placeholder=" ">
+                     <label for="review" class="add__label">Review</label>
+                     
+                  </div>
+               </div>
+
+              
+
+
+
+             
+                  
+
+                
+            </div>
+
+           
+
+            <button type="submit" class="login__button">Submit</button>
+
+           
+         </form>
+      </div>
+      
+      
+   </body>
+</html>

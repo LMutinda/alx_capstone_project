@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section>
+
+        <nav>
+            <h1>{{ book.title }}</h1>
+            <ul>
+                <li>
+                    <div class="login">
+                        <a href="{{ url_for('rate_book', id=book.id) }}" >Rate Book</a>
+                    </div>
+                </li>
+               
+                
+               
+                <li>
+                    <div class="login">
+                        <a href="{{ url_for('edit_book', id=book.id) }}">Edit Entry</a>
+                    </div>
+                </li>
+                
+                <li>
+                    <div class="signup">
+                        <form action="{{ url_for('delete_book',id=book.id) }}" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">Delete Book</button>
+                        </form>
+                        
+                    </div>
+                </li>
+             
+                
+            </ul>
+
+    
+        </nav>
+
+        <div class="main">
+            <div class="main_img">
+                <img src="{{ book.cover_image }}" alt="Book Cover"  >
+
+            </div>
+            
+            
+            <div class="main_tag">
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Genre:</strong> {{ book.genre }}</p>
+                <p><strong>Reading Status:</strong> {{ book.reading_status }}</p>
+                <!-- Display Average Ratings and Reviews -->
+                <p><strong>Average Rating:</strong>  
+                {% for rating in book.ratings %}
+                    <p>{{ rating.value }}/5</p>
+                {% endfor %}
+                    
+                <p><strong>Reviews:</strong></p>
+                
+                {% for review in book.reviews %}
+                    <p>{{ review.content }}</p>
+                {% endfor %}
+                
+
+            </div>
+
+            
+      
+
+        
+        
+        
+        
+            
+    
+           
+        </div>
+
+    </section>
+    
+
+
+    
+  
+</body>
+</html>
+

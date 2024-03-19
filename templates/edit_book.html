@@ -13,22 +13,22 @@
       <!--=============== CSS ===============-->
       <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-      <title>Add Book</title>
+      <title>Edit Book</title>
    </head>
    <body>
       <div class="login">
          <img src="{{ url_for('static', filename='image/login-bg.png') }}" alt="Login image" class="login__img">
          
 
-         <form action="{{ url_for('add_book') }}" method="post" class="login__form">
-            <h1 class="login__title">Add Book</h1>
+         <form action="{{ url_for('edit_book', id=book.id) }}" method="post" class="login__form">
+            <h1 class="login__title">Edit Book</h1>
            
             <div class="login__content">
                <div class="login__box">
                  
 
                   <div class="login__box-input">
-                     <input type="text" id="title" name="title" required class="login__input"  placeholder=" ">
+                     <input type="text" id="title" name="title" required class="login__input"  value="{{book.title}}">
                      <label for="title" class="add__label">Title</label>
                   </div>
                </div>
@@ -37,7 +37,7 @@
                   
 
                   <div class="login__box-input">
-                     <input type="text" name="author" required class="login__input" id="author" placeholder=" ">
+                     <input type="text" name="author" required class="login__input" id="author" value="{{book.author}}">
                      <label for="author" class="add__label">Author</label>
                      
                   </div>
@@ -47,7 +47,7 @@
                   
 
                 <div class="login__box-input">
-                   <input type="text" name="genre" required class="login__input" id="genre" placeholder=" ">
+                   <input type="text" name="genre" required class="login__input" id="genre" value="{{book.genre}}">
                    <label for="genre" class="add__label">Genre</label>
                    
                 </div>
@@ -58,7 +58,7 @@
                   
 
                 <div class="login__box-input">
-                   <input type="text" name="cover_image" class="login__input" id="cover_image" placeholder=" ">
+                   <input type="text" name="cover_image" class="login__input" id="cover_image" value="{{book.cover_image}}">
                    <label for="cover_image" class="add__label">Cover Image URL</label>
                    
                 </div>
@@ -68,14 +68,15 @@
                   
 
                 <div class="login__box-input">
-                  <!--<input type="text" name="reading_status" class="login__input" id="reading_status" placeholder=" ">-->
-                  <select id="reading_status" name="reading_status" class="login__input" style="width: 350px; border: none;">
-                     <option value="To be Read">To be Read</option>
-                     <option value="In-progress" >In Progress</option>
-                     <option value="Completed" >Completed</option>
+                   <!--<input type="text" name="reading_status" class="login__input" id="reading_status" value="{{book.reading_status}}">-->
+                   <select id="reading_status" name="reading_status" class="login__input" style="width: 350px;border: none;">
+                        <option value="To be Read" {% if book.reading_status == 'To be Read' %} selected {% endif %}>To be Read</option>
+                        <option value="In-progress" {% if book.reading_status == 'In_progress' %} selected {% endif %}>In Progress</option>
+                        <option value="Completed" {% if book.reading_status == 'Completed' %} selected {% endif %}>Completed</option>
 
-                  </select>
-                  <label for="reading_status" class="add__label">Reading Status</label>
+                   </select>
+                   <label for="reading_status" class="add__label">Reading Status</label>
+                   
                    
                    
                 </div>
@@ -84,7 +85,7 @@
 
            
 
-            <button type="submit" class="login__button">Add book</button>
+            <button type="submit" class="login__button">Save Changes</button>
 
            
          </form>

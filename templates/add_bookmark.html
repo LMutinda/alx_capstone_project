@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Bookmark</title>
+</head>
+<body>
+    <h1>Add Bookmark</h1>
+    <form action="{{ url_for('add_bookmark', id=book.id) }}" method="post">
+        <input type="hidden" name="id" value="{{ book.id }}">
+        
+        <label for="bookmark_name">Bookmark Name:</label><br>
+        <input type="text" id="bookmark_name" name="bookmark_name"><br>
+        
+        <label for="url">URL:</label><br>
+        <input type="text" id="url" name="url"><br>
+        
+        <input type="submit" value="Add Bookmark">
+    </form>
+</body>
+</html>

@@ -204,7 +204,7 @@ img {
 
 /*=============== BREAKPOINTS ===============*/
 /* For medium devices */
-@media screen and (min-width: 576px) {
+@media screen and (min-width: 540px) {
   .login {
     justify-content: center;
   }
@@ -216,4 +216,30 @@ img {
   .login__title {
     font-size: 2rem;
   }
+}
+
+@media screen and(max-width:480){
+  .login {
+    justify-content: center;
+    margin-right: 20px;
+  }
+
+  .login__img {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .login__form {
+    width: 50%;
+    padding: 3rem 2rem 2.5rem;
+    border-radius: 1rem;
+  }
+  .login__title {
+    font-size: 1.5rem;
+
+  }
+
+  
 }

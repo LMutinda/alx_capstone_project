@@ -6,10 +6,10 @@
 }
 
 section{
-    width: 110%;
+    width: 98%;
     height: 100vh;
     background-image: url('../image/bg.png');
-    background-size: cover;
+    background-size:cover;
     background-position: center;
 }
 
@@ -17,7 +17,7 @@ section nav{
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     box-shadow: 0 0 10px #089da1;
     background: #fff;
     position: fixed;
@@ -26,6 +26,7 @@ section nav{
 }
 
 section nav .logo img{
+   
     width: 100px;
     cursor: pointer;
     margin: 8px 0;
@@ -37,7 +38,7 @@ section nav ul{
 
 section nav li{
     display: inline-block;
-    padding: 0 20px;
+    padding: 0 0 0 20px;
 }
 
 section nav li a{
@@ -46,6 +47,19 @@ section nav li a{
 }
 
 section nav li a:hover{
+    color: #089da1;
+}
+
+section nav li button{
+    text-decoration: none;
+    border:none;
+    color: #000;
+    background-color: white;
+    font-size: 17px;
+
+}
+
+section nav li button:hover{
     color: #089da1;
 }
 
@@ -64,6 +78,7 @@ section nav .booksearch{
 
 section nav .social_icon i{
     margin: 0 5px;
+   
     font-size: 16px;
     
     
@@ -77,9 +92,10 @@ section nav .social_icon i:hover{
 }
 
 section .main{
+    
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-between;
     position: relative;
     top: 10%;
 }
@@ -96,11 +112,11 @@ section .main h1 span{
 }
 
 section .main p{
-    width: 650px;
+    width: 400px;
     text-align: justify;
     line-height: 22px;
     position: relative;
-    top: 125px;
+    top: 100px;
     left: 25px;
 }
 
@@ -109,14 +125,14 @@ section .main .main_tag .main_btn{
     padding: 10px 20px;
     position: relative;
     border-radius: 20px;
-    top: 200px;
+    top: 140px;
     left: 25px;
     color: #fff;
     text-decoration: none;
 }
 
 section .main .main_img img{
-    width: 780px;
+    width: 640px;
     position: relative;
     top: 90px;
     left: 20px;
@@ -228,7 +244,8 @@ section .main .main_img img{
 /*Footer*/
 
 footer{
-    width: 100%;
+    width: 2800px;
+
     background: #eaeaea;
     position: relative;
     top: 100%;
@@ -315,4 +332,247 @@ footer .end{
 footer .end span{
     color: #089da1;
     margin-left: 10px;
+}
+
+
+@media screen and (max-width: 480px) {
+    section{
+        height: auto;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        align-items: center;
+    }
+
+    section nav{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        
+        justify-content: space-around;
+        box-shadow: 0 0 10px #089da1;
+        background: #fff;
+        position: fixed;
+        left: 0;
+        z-index: 100;
+    }
+
+    section nav .logo img{
+   
+        width: 80px;
+        cursor: pointer;
+        margin: 8px 170px;
+    }
+
+
+    
+section nav ul{
+    list-style: none;
+    margin:0 105px;
+}
+
+section nav .booksearch{
+    height: 20px;
+    border: 2px solid ;
+    border-radius: 5px; 
+    
+    font-size: 16px; 
+    margin:0 0 0 115px;
+   
+    
+    
+
+
+}
+section .main{
+    
+    display: flex;
+    flex-direction: column;
+   
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    top:100px;
+}
+
+section .main h1{
+    position: relative;
+    font-size: 55px;
+    top: 80px;
+    left: 25px;
+}
+
+section .main h1 span{
+    color: #089da1;
+}
+
+section .main p{
+    width: 350px;
+    text-align: justify;
+    line-height: 22px;
+    position: relative;
+    top: 100px;
+    left: 25px;
+}
+
+section .main .main_tag .main_btn{
+    background: #089da1;
+    padding: 10px 20px;
+    position: relative;
+    border-radius: 20px;
+    top: 140px;
+    left: 25px;
+    color: #fff;
+    text-decoration: none;
+}
+
+section .main .main_img img{
+    width: 400px;
+    position: relative;
+    top: 200px;
+    left: 20px;
+}
+
+
+/*Books*/
+
+.featured_boks{
+    width: 100%;
+    height: 100vh;
+    padding: 350px 0;
+}
+
+.featured_boks h1{
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    font-size: 45px;
+}
+
+.featured_boks .featured_book_box .featured_book_card{
+    width: 250px;
+    height: 420px;
+    text-align: center;
+    padding: 5px;
+    border: 1px solid #919191;
+    margin: 20px 50px;
+}
+
+
+/*Footer*/
+
+footer{
+    width: 100%;
+
+    background: #eaeaea;
+    height: auto;
+    position: relative;
+    top: 200px;
+    padding-bottom: 50px;
+    
+    
+}
+
+footer .footer_main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+footer .footer_main .tag{
+    margin: 10px 0;
+}
+
+footer .footer_main .tag img{
+    width: 100px;
+    margin-bottom: 10px;
+    margin-top: 80px;
+    margin-left: 120px;
+}
+
+
+
+footer .footer_main .tag h1{
+    font-size: 25px;
+    margin: 25px 0;
+    color: #000;
+    
+}
+
+footer .footer_main .tag a{
+    display: block;
+    color: black;
+    text-decoration: none;
+    margin: 10px 80px 0;
+    
+
+    
+
+}
+
+footer .footer_main .tag i{
+    margin-right: 2px;
+    
+}
+
+footer .footer_main .tag .social_link i{
+    margin: 0 0 0 60px;
+}
+
+footer .footer_main .tag .search_bar{
+    width: 230px;
+    height: 30px;
+    background: rgba(202,202,202);
+    border-radius: 25px;
+    margin-left: 60px;
+}
+
+footer .footer_main .tag .search_bar input{
+    width: 200px;
+    padding: 2px 0;
+    position: relative;
+    top: 17%;
+    left: 6%;
+    border: none;
+    outline: none;
+    font-size: 13px;
+    background: none;
+}
+
+footer .footer_main .tag .search_bar button{
+    padding: 7px 15px;
+    background: #089da1;
+    border: none;
+    margin-top: 15px;
+    border-radius: 25px;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 70px;
+}
+
+footer .end{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    color: #000;
+}
+
+footer .end span{
+    color: #089da1;
+    margin-left: 10px;
+}
+
+
+
+
+
+
+
+    
+    
 }

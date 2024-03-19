@@ -1,8 +1,12 @@
 # app.py
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash,session
+from sqlalchemy import Column, Integer, String, Table, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 import secrets
+from sqlalchemy import text
+from sqlalchemy import and_
+
 
 # Generate a secure key
 secure_key = secrets.token_hex(32)
@@ -16,16 +20,35 @@ db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
+
+
+
+
+
+
+
+
+
+
 class User(UserMixin, db.Model):
+    
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(100), nullable=False)
+
+   
+    
+   
+    
+   
+    
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 class Book(db.Model):
+    
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     author = db.Column(db.String(100), nullable=False)
@@ -34,6 +57,26 @@ class Book(db.Model):
     reading_status = db.Column(db.String(20))  # Added reading status field
     ratings = db.relationship('Rating', backref='book', lazy=True)
     reviews = db.relationship('Review', backref='book', lazy=True)
+   
+
+# Association Table (Many-to-Many)
+
+class UserBooks(db.Model):
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'),primary_key = True)
+    book_id = db.Column(db.Integer, db.ForeignKey('book.id'), primary_key = True)
+    
+
+
+    
+    
+
+
+
+    
+
+
+
 
 
 class Rating(db.Model):
@@ -49,8 +92,10 @@ class Review(db.Model):
 
 # Enclose db.create_all() in an application context
 with app.app_context():
-    # Create database tables
-    db.create_all()
+    try:
+        db.create_all()
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -71,6 +116,12 @@ def login():
         password = request.form['password']
         user = User.query.filter_by(username=username).first()
         if user and user.password == password:
+            
+            user_string = str(user)
+            user_id = int(user_string.split()[1][:-1])
+            #print(user_id)
+            
+            session['user_id'] = user_id
             login_user(user)
             next_page = request.args.get('next')
             return redirect(next_page or url_for('index'))
@@ -87,12 +138,45 @@ def logout():
 @app.route('/')
 @login_required
 def index():
-    books = Book.query.all()
+    if 'user_id' in session:
+        user_id = session['user_id']
+        # Now you have the user_id, you can proceed with your logic
+       
+    else:
+        return redirect(url_for('login'))
+    
+    try:
+
+        '''sql_query = text ('SELECT Book.title, Book.author,Book.genre, Book.cover_image, Book.reading_status FROM Book JOIN UserBooks JOIN User ON UserBooks.user_id = User.id AND UserBooks.book_id ')
+        books = db.session.execute(sql_query).fetchall()'''
+
+        books = db.session.query(Book).join(UserBooks).join(User).filter(User.id == user_id).all()
+        # If no books found, return an empty list
+        if not books:
+            books = []
+
+    except:
+        books = []
+
+    
+   
+    #books = db.session.query(Book).join(UserBooks).filter(UserBooks.user_id == user_id).all()
+    #books = db.session.query(Book)
+
     return render_template('index.html', books=books)
 
 @app.route('/add_book', methods=['GET', 'POST'])
 @login_required
 def add_book():
+    if 'user_id' in session:
+        user_id = session['user_id']
+        # Now you have the user_id, you can proceed with your logic
+       
+    else:
+        return redirect(url_for('login'))
+   
+    
+    
     if request.method == 'POST':
         title = request.form['title']
         author = request.form['author']
@@ -101,6 +185,13 @@ def add_book():
         reading_status = request.form['reading_status']
         book = Book(title=title, author=author, genre=genre, cover_image=cover_image, reading_status=reading_status)
         db.session.add(book)
+        db.session.commit()
+        user_book_entry = UserBooks(user_id=user_id, book_id=book.id)
+        db.session.add(user_book_entry)
+        
+        
+        #user.books.append(book)
+        
         db.session.commit()
         flash('Book added successfully!')
         return redirect(url_for('index'))
@@ -115,6 +206,7 @@ def edit_book(id):
         book.author = request.form['author']
         book.genre = request.form['genre']
         book.cover_image = request.form['cover_image']
+        book.reading_status = request.form['reading_status']
         db.session.commit()
         flash('Book updated successfully!')
         return redirect(url_for('index'))
@@ -133,6 +225,19 @@ def delete_book(id):
 @login_required
 def book_details(id):
     book = Book.query.get_or_404(id)
+    # Calculate average rating for the book
+    # Calculate_average_rating(book)
+    # Check if the book object has an id attribute
+    # Check if bookmark exists for the book
+    
+    if not hasattr(book, 'id'):
+        # Handle the case where the book object does not have an id attribute
+        # This could occur if the book object is None or if it is missing the id attribute for some reason
+        # You might want to return an error message or redirect the user to a different page
+        flash('Error: Book not found')
+        return redirect(url_for('index'))  # Redirect to the homepage or another appropriate page
+    
+    # Continue with rendering the book details template
     return render_template('book_details.html', book=book)
 
 @app.route('/search', methods=['GET', 'POST'])
@@ -146,44 +251,8 @@ def search():
     ).all()
     return render_template('index.html', books=books)
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
-
-# Reading Progress Routes
-@app.route('/update_reading_status/<int:id>', methods=['POST'])
-@login_required
-def update_reading_status(id):
-    book = Book.query.get_or_404(id)
-    if request.method == 'POST':
-        reading_status = request.form['reading_status']
-        book.reading_status = reading_status
-        db.session.commit()
-        flash('Reading status updated successfully!')
-        return redirect(url_for('book_details', id=id))
-
-@app.route('/add_bookmark/<int:id>', methods=['POST'])
-@login_required
-def add_bookmark(id):
-    # Logic to add bookmark
-    flash('Bookmark added successfully!')
-    return redirect(url_for('book_details', id=id))
-
-# Rating and Review Routes
-@app.route('/rate_book/<int:id>', methods=['POST'])
-@login_required
-def rate_book(id):
-    book = Book.query.get_or_404(id)
-    if request.method == 'POST':
-        rating = int(request.form['rating'])
-        review = request.form['review']
-        # Logic to save rating and review
-        flash('Rating and review submitted successfully!')
-        return redirect(url_for('book_details', id=id))
-    
-
-
-@app.route('/rate_book/<int:id>', methods=['POST'])
+@app.route('/rate_book/<int:id>', methods=['GET', 'POST'])
 @login_required
 def rate_book(id):
     book = Book.query.get_or_404(id)
@@ -211,6 +280,7 @@ def rate_book(id):
         flash('Rating and review submitted successfully!')
 
         return redirect(url_for('book_details', id=id))
+    return render_template('rate_book.html', book=book)
 
 # Calculate average rating for each book
 def calculate_average_rating(book):
@@ -221,12 +291,26 @@ def calculate_average_rating(book):
     else:
         book.average_rating = 0
 
-@app.route('/book_details/<int:id>')
-@login_required
-def book_details(id):
-    book = Book.query.get_or_404(id)
-    
-    # Calculate average rating for the book
-    calculate_average_rating(book)
 
-    return render_template('book_details.html', book=book)
+
+@app.route('/add_bookmark/<int:id>', methods=['POST'])
+@login_required
+def add_bookmark(id):
+    # Logic to add bookmark
+    flash('Bookmark added successfully!')
+    return redirect(url_for('book_details', id=id))
+
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
